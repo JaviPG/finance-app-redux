@@ -101,6 +101,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "financeApp:build:production",
+            "firebaseProject": "financeapp-3fab5",
+            "firebaseHostingSite": "financeapp-3fab5"
+          }
         }
       }
     }
