@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { map, Subscription } from 'rxjs';
 import { AppState } from '../app.reducer';
 import * as authActions from '../auth/auth.actions';
+import * as itemActions from '../ingreso-egreso/ingreso-egreso.actions';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -12,7 +13,12 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
 
-  userSubscription: Subscription
+  userSubscription: Subscription;
+  _user: User | null;
+
+  get user() {
+    return this._user;
+  }
 
   constructor(
     private auth: AngularFireAuth,
@@ -26,11 +32,14 @@ export class AuthService {
         this.userSubscription = this.firestore.doc(`${fuser.uid}/user`).valueChanges()
         .subscribe( (fsUser: any) => {
           const user = User.fromFirestore(fsUser);
+          this._user = user;
           this.store.dispatch(authActions.setUser({user}));
         });
       } else {
+        this._user = null;
         this.userSubscription.unsubscribe();
         this.store.dispatch(authActions.unSetUser());
+        this.store.dispatch(itemActions.unSetItems());
       }      
     });
   }
