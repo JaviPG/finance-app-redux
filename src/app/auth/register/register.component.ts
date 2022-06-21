@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.uiSubscription.unsubscribe();
+    this.uiSubscription?.unsubscribe();
   }
 
   crearUsuario() {

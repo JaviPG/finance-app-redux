@@ -25,7 +25,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(filter((auth) => auth.user !== null))
       .subscribe(({ user }) => {
         if (!user) return;
-        console.log(user);
         this.itemsSubscription = this.ingEgrSrv
           .initIngresosEgresosListener(user.uid)
           .subscribe((items) =>
@@ -35,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.itemsSubscription.unsubscribe();
+    this.userSubscription?.unsubscribe();
+    this.itemsSubscription?.unsubscribe();
   }
 }

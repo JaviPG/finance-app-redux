@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AppState } from 'src/app/app.reducer';
 import { IngresoEgreso } from '../../models/ingreso-egreso.model';
 import { ChartData } from 'chart.js';
+import { AppStateWithItem } from '../ingreso-egreso.reducer';
 
 @Component({
   selector: 'app-estadistica',
@@ -26,7 +26,7 @@ export class EstadisticaComponent implements OnInit, OnDestroy {
     datasets: [{ data: [] }],
   };
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppStateWithItem>) {}
 
   ngOnInit(): void {
     this.itemSubs = this.store
@@ -35,7 +35,7 @@ export class EstadisticaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.itemSubs.unsubscribe();
+    this.itemSubs?.unsubscribe();
   }
 
   resetStats() {
